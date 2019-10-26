@@ -16,9 +16,13 @@ public class UserVillage {
 
     public void updateUser(User updatedUser, Integer userId) {
         Boolean verifySameUser = false;
-
-        if (verifySameUser) users.set(userId, updatedUser);
+        String currentUserUsername = getUserById(userId).getUsername();
+        String updatedUserUsername = updatedUser.getUsername();
+        // this makes sure that the correct user is being updated
+        if (currentUserUsername == updatedUserUsername) users.set(userId, updatedUser);
+        else Console.println("updateUser failed. usernames do not match");
     }
+
     public User getUserById(Integer userId) {
         return users.get(userId);
     }
