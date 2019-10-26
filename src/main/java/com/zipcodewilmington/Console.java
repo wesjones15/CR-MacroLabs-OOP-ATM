@@ -18,4 +18,11 @@ public class Console {
         return userInput;
     }
 
+    public static Integer getIntegerInput(String prompt) {
+        Scanner scanner = new Scanner(System.in);
+        print(prompt);
+        Integer userInput = scanner.nextInt();
+        return userInput;
+    }
+
 }
