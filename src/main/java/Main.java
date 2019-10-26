@@ -4,6 +4,10 @@
 public class Main {
 
     public static void main(String[] args){
+        //while
+       //login or register
+       //display acc info
+       //logout, transfer
         
     }
 }
