@@ -1,4 +1,4 @@
 package com.zipcodewilmington;
 
-public class Savings {
+public class Savings implements Account {
 }

@@ -1,5 +1,5 @@
-package java.com.zipcodewilmington;
+package com.zipcodewilmington;
 
-public class Account {
+public interface Account {
 
 }
