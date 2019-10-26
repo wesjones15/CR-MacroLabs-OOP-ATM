@@ -36,6 +36,8 @@ public class UserVillage {
             }
         }
         if (userId+1 > users.size()) {
+            userId = 0;
+            Console.println("user not found, returning default user instead of breaking");
             // should raise user not found exception
         }
         return users.get(userId);
