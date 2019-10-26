@@ -1,20 +1,21 @@
 package com.zipcodewilmington;
 
 public class User {
-    private String userId;
+    private Integer userId;
     private String username;
     private String password;
 
     public User(){}
 
-    public User( String username, String password){
+    public User( String username, String password, Integer userId){
         this.username = username;
         this.password = password;
+        this.userId = userId;
     }
     //ID
-    public String getUserId(){ return userId;}
+    public Integer getUserId(){ return userId;}
 
-    public void setUserId(String userId){ this.userId = userId;}
+    public void setUserId(Integer userId){ this.userId = userId;}
     //PW
     public String getPassword(){return password; }
 

@@ -12,7 +12,7 @@ class UserWarehouse<UserType extends User> {
 
     public UserType getUserById(int id) {
         for(UserType user : list) {
-            if(user.getId() == id) {
+            if(user.getUserId() == id) {
                 return user;
             }
         }
