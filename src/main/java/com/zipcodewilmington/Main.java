@@ -16,7 +16,7 @@ public class Main {
             executeLoginAction(action);
 
 
-
+            atmIsRunning = false;
         }
         //while
        //login or register
