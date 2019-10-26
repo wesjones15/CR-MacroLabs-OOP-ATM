@@ -6,15 +6,15 @@ Week 2 project: ATM Simulator
 Every feature must have corresponding unit tests
 Tests should demonstrate proper behavior, and proper handling of misuse (eg. attempts to deposit/transfer/withdraw negative amounts
 
-- User interface: CLI (Command line interface) Only
+- com.zipcodewilmington.User interface: CLI (Command line interface) Only
   - Direct Input
   - Numbered options (instead of on-screen buttons)
   - ASCII art welcome but not required
 - Must support account types:
-  - Checking
-  - Savings
+  - com.zipcodewilmington.Checking
+  - com.zipcodewilmington.Savings
   - Investment
-- Account Actions
+- com.zipcodewilmington.Account Actions
   - Withdraw from acct
   - Deposit to acct
   - Transfer across accounts (self)
@@ -34,7 +34,7 @@ Tests should demonstrate proper behavior, and proper handling of misuse (eg. att
 
 
 Recommended:
-Create a `Console` class that manages console interactions.
+Create a `com.zipcodewilmington.Console` class that manages console interactions.
 Create a `ConsoleMock` for testing (provide scripted user input using this object).
 
 ## What's next?
