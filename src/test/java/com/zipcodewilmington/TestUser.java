@@ -9,44 +9,56 @@ public class TestUser {
     public void testDefaultUserConstructor(){
         User user = new User();
         //ID
-        String expectedName = "TestUser";
-        user.setUserId(expectedName);
-        String actualName  = user.getUserId();
+        Integer expectedId = 0;
+        user.setUserId(expectedId);
+        Integer actualId  = user.getUserId();
 
         //PW
         String expectedPassword = "TestPassword";
         user.setPassword(expectedPassword);
         String actualPassword = user.getPassword();
 
-        Assert.assertEquals(expectedName,actualName);
+        //Username
+        String expectedUsername = "TestUser";
+        user.setUsername(expectedUsername);
+        String actualUsername = user.getUsername();
+
+        Assert.assertEquals(expectedId,actualId);
         Assert.assertEquals(expectedPassword,actualPassword);
+        Assert.assertEquals(expectedUsername,actualUsername);
 
     }
 
     @Test
     public void testUserConstructor(){
-        User user = new User("TestUser", "TestPassowrd");
+        User user = new User("TestUser", "TestPassowrd",0);
         //ID
-        String expectedName = "TestUser";
-        user.setUserId(expectedName);
-        String actualName  = user.getUserId();
+        Integer expectedId = 0;
+        user.setUserId(expectedId);
+        Integer actualId  = user.getUserId();
 
         //PW
         String expectedPassword = "TestPassword";
         user.setPassword(expectedPassword);
         String actualPassword = user.getPassword();
 
-        Assert.assertEquals(expectedName,actualName);
+        //Username
+        String expectedUsername = "TestUser";
+        user.setUsername(expectedUsername);
+        String actualUsername = user.getUsername();
+
+        Assert.assertEquals(expectedId,actualId);
         Assert.assertEquals(expectedPassword,actualPassword);
+        Assert.assertEquals(expectedUsername,actualUsername);
 
     }
 
     @Test
     public void testSetUserID(){
-        User user = new User("TestUser", null);
-        String expected = "TestUser";
+        User user = new User(null,null,1);
+        Integer expected = 1;
         user.setUserId(expected);
-        String actual  = user.getUserId();
+        Integer actual  = user.getUserId();
         Assert.assertEquals(expected,actual);
     }
 }
