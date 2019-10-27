@@ -28,12 +28,28 @@ public class User {
     public void setUsername(String username){this.username = username; }
 
     //TODO write method for open checking account
+    public void openCheckingAccount() {
+        //check if existing account lives here
+        accounts[0] = new Checking(0.00, this.getUserId());
+        String message = String.format("New Checking account opened for %s, \n Current Balance: $ %8.2d", username, accounts[0].getBalance());
+        Console.println(message);
+    }
     // set boolean accountIsOpen to true
 
     //TODO write method for open savings account
-
+    public void openSavingsAccount() {
+        //check if existing account lives here
+        accounts[1] = new Savings(0.00, this.getUserId());
+        String message = String.format("New Savings account opened for %s, \n Current Balance: $ %8.2d", username, accounts[1].getBalance());
+        Console.println(message);
+    }
     //TODO write method for open investments account
-
+    public void openInvestmentsAccount() {
+        //check if existing account lives here
+        accounts[2] = new Investments(0.00, this.getUserId());
+        String message = String.format("New Investments account opened for %s, \n Current Balance: $ %8.2d", username, accounts[2].getBalance());
+        Console.println(message);
+    }
     //TODO write method for close checking account
     // verify account is empty
     // replace accounts[0] with empty checking account object
