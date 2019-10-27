@@ -40,7 +40,7 @@ public class User {
     public void openSavingsAccount() {
         //check if existing account lives here
         accounts[1] = new Savings(0.00, this.getUserId());
-        String message = String.format("New Savings account opened for %s, \n Current Balance: $ %8.2f", username, accounts[1].getBalance());
+        String message = String.format("New Savings account opened for %s, \nCurrent Balance: $ %8.2f", username, accounts[1].getBalance());
         Console.println(message);
     }
     //TODO write method for open investments account

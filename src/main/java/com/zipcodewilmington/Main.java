@@ -10,6 +10,8 @@ public class Main {
     private static User currentUser;
     private static String currentUserUsername;
     private static Integer action;
+    private static Account currentAccount;
+    private static final String[] accountNames = {"Checking", "Savings", "Investments"};
 
     public static void main(String[] args){
         Console.println("Welcome to the ATM");
@@ -28,6 +30,7 @@ public class Main {
                 action = Console.getIntegerInput("Choose an action: ");
                 executeUserAction(action);
             }
+
 
 
         }
@@ -84,28 +87,153 @@ public class Main {
                 break;
             case 1:
                 // access account
+                currentAccount = selectCurrentAccount(currentUser);
+                selectTransaction();
                 break;
             case 2:
                 // open account
+                int accountIndex = selectAccountToOpen();
+                openAccount(accountIndex);
                 break;
         }
     }
 
-    public static void chooseAccountAction(int action) {
+    public static void selectTransaction() {
+        String message = "Options\n\t1 : check balance\n\t2 : deposit\n\t3 : withdraw\n\t4 : transfer to other account\n\t0 : back";
+        Console.println(message);
+        Integer action = Console.getIntegerInput("Select option: ");
+        switch (action) {
+            case 0:
+                // back
+                break;
+            case 1:
+                // check balance
+                Console.println("Current Balance: $"+currentAccount.getBalance());
+                break;
+            case 2:
+                // deposit
+                Console.println("Deposit Into Account");
+                depositToAccount();
+                break;
+            case 3:
+                // withdraw
+                withDrawFromAccount();
+                break;
+            case 4:
+                // transfer to other account
+                selectTransferTarget();
+                break;
+        }
+    }
+
+    public static void depositToAccount() {
+        Double oldBalance = currentAccount.getBalance();
+        Double amountToDeposit = Console.getDoubleInput("Enter deposit amount: ");
+        Double newBalance = oldBalance + amountToDeposit;
+        currentAccount.setBalance(newBalance);
+        // transaction report
+        String transactionReport = currentAccount.buildTransactionReport(oldBalance, newBalance, amountToDeposit, "deposit");
+        currentAccount.addTransactionReportToTransactionHistory(transactionReport);
+        Console.println(transactionReport);
+        userVillage.updateUser(currentUser, currentUser.getUserId());
+    }
+
+    public static void withDrawFromAccount() {
+        Double oldBalance = currentAccount.getBalance();
+        Double amountToWithdraw = Console.getDoubleInput("Enter amount to withdraw: ");
+        Double newBalance = oldBalance - amountToWithdraw;
+        currentAccount.setBalance(newBalance);
+        String transactionReport = currentAccount.buildTransactionReport(oldBalance, newBalance, amountToWithdraw, "withdraw");
+        currentAccount.addTransactionReportToTransactionHistory(transactionReport);
+        Console.println(transactionReport);
+        userVillage.updateUser(currentUser, currentUser.getUserId());
+    }
+
+    public static void selectTransferTarget() {
+        Account sourceAccount = currentAccount;
+        User sourceUser = currentUser;
+        Console.println("Options\n\t0 : transfer to your other open accounts\n\t1 : transfer to another user");
+        int choice = Console.getIntegerInput("Select option: ");
+        switch (choice) {
+            case 0:
+                // select from own accounts
+                transferToOwnAccount();
+                break;
+            case 1:
+                // select another user's account
+                transferToAnotherUsersAccount();
+                break;
+        }
+    }
+
+    public static void transferToOwnAccount() {
+        User sourceUser = currentUser;
+        Account sourceAccount = currentAccount;
+        Account targetAccount = selectCurrentAccount(sourceUser);
+        // withdraw from sourceAccount
+        // deposit to targetAccount
+        // create transaction report
+
+        // update user
+        userVillage.updateUser(sourceUser, sourceUser.getUserId());
+    }
+
+    public static void transferToAnotherUsersAccount() {
+        User sourceUser = currentUser;
+        Account sourceAccount = currentAccount;
+        String targetUsername = Console.getStringInput("Enter username you wish to transfer to: ");
+        User targetUser = userVillage.getUserByUsername(targetUsername);
+        Account targetAccount = selectCurrentAccount(targetUser);
+        // withdraw from sourceAccount
+        // deposit to targetAccount
+        // create transaction report for sourceAccount
+        // create transaction report for targetAccount
+        // update account
+        // update users
+        userVillage.updateUser(sourceUser, sourceUser.getUserId());
+        userVillage.updateUser(targetUser, targetUser.getUserId());
+    }
+
+    public static Account selectCurrentAccount(User user) {
         StringBuilder message = new StringBuilder();
         message.append("Options\n");
-        int idx = 0;
-        for (Account account : currentUser.getAccounts()) {
-            if (account.checkIfAccountIsOpen()) {
-                idx += 1;
-                message.append(String.format("\t%s : %s\n", idx, account.getClass()));
+        for (int i = 0; i < user.getAccounts().length; i++) {
+            if (user.getAccounts()[i] != null && user.getAccounts()[i] != currentAccount) {
+                message.append(String.format("\t%s : %s\n", i, accountNames[i]));
             }
         }
         Console.println(message.toString());
-        Console.getIntegerInput("select account: ");
-        //checking
-        //savings
-        //investments
+        int accountIndex = Console.getIntegerInput("select account: ");
+        return user.getAccounts()[accountIndex];
+    }
+
+    public static Integer selectAccountToOpen() {
+        StringBuilder message = new StringBuilder();
+        message.append("Options\n");
+        for (int i = 0; i < currentUser.getAccounts().length; i++) {
+            if (currentUser.getAccounts()[i] == null) {
+                message.append(String.format("\t%s : %s\n", i, accountNames[i]));
+            }
+        }
+        Console.println(message.toString());
+        int accountIndex = Console.getIntegerInput("select account: ");
+        return accountIndex;
+    }
+
+    public static void openAccount(int accountIndex) {
+        // check if account is not already open
+        switch(accountIndex) {
+            case 0:
+                currentUser.openCheckingAccount();
+                break;
+            case 1:
+                currentUser.openSavingsAccount();
+                break;
+            case 2:
+                currentUser.openInvestmentsAccount();
+                break;
+        }
+        userVillage.updateUser(currentUser, currentUser.getUserId());
     }
 
 
