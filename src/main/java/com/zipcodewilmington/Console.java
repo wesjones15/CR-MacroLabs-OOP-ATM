@@ -25,4 +25,13 @@ public class Console {
         return userInput;
     }
 
+    public static Double getDoubleInput(String prompt) {
+        Scanner scanner = new Scanner(System.in);
+        print(prompt);
+        Double userInput = scanner.nextDouble();
+        //TODO add regex validation for 8.2d structure
+        // reference calculator lab for this
+        return userInput;
+    }
+
 }
