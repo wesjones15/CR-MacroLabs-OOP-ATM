@@ -30,10 +30,10 @@ public class UserVillage {
     public User getUserByUsername(String username) {
         int userId = 0;
         for (User user : users) {
-            userId += 1;
             if (user.getUsername() == username) {
                 break;
             }
+            userId += 1;
         }
         if (userId+1 > users.size()) {
             userId = 0;
