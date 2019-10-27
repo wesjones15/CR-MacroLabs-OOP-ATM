@@ -11,7 +11,9 @@ public class UserVillage {
     }
 
     public void createNewUser(String username, String password) {
-        users.add(new User(username, password, users.size()));
+        if (verifyUsernameNotTaken(username)) {
+            users.add(new User(username, password, users.size()));
+        }
     }
 
     // removeUser should call updateUser and update with new empty user object
@@ -58,5 +60,15 @@ public class UserVillage {
 
     public ArrayList<User> getUsersList() {
         return users;
+    }
+    public Boolean verifyUsernameNotTaken(String username) {
+        boolean uniqueUsername = true;
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                uniqueUsername = false;
+                break;
+            }
+        }
+        return uniqueUsername;
     }
 }

@@ -4,6 +4,7 @@ public class User {
     private Integer userId;
     private String username;
     private String password;
+    private Account[] accounts;
 
     public User(){}
 
@@ -11,6 +12,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.userId = userId;
+        this.accounts = new Account[3];//checking, savings, investment
     }
     //ID
     public Integer getUserId(){ return userId;}
@@ -25,5 +27,22 @@ public class User {
 
     public void setUsername(String username){this.username = username; }
 
+    //TODO write method for open checking account
+
+    //TODO write method for open savings account
+
+    //TODO write method for open investments account
+
+    //TODO write method for close checking account :
+
+    //TODO write method for close savings account
+
+    //TODO write method for close investments account
+
+    //TODO write method for get checking account : return accounts[0]
+
+    //TODO write method for get savings account : return accounts[1]
+
+    //TODO write method for get investments account : return accounts[2]
 
 }

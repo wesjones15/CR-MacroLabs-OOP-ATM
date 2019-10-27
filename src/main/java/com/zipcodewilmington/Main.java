@@ -101,4 +101,5 @@ public class Main {
         userVillage.createNewUser(currentUserUsername, password);
         return userVillage.getUserByUsername(currentUserUsername);
     }
+
 }
