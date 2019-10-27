@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Account {
     private Double balance;
     private Integer userId;
-    private Boolean accountIsOpen;
+    private Boolean accountIsOpen = false;
     private ArrayList<String> transactionHistory;
 
     // constructor
@@ -22,6 +22,14 @@ public class Account {
     }
 
     //TODO write closeAccount method
+    public void closeAccount(Account account, Integer userId) {
+        if (account.getBalance() == 0.00 && account.getUserId() == userId) {
+            account.accountIsOpen = false;
+            // create transaction report
+        } else {
+            // your balance must be $0.00 to close your account
+        }
+    }
 
     public Boolean checkIfAccountIsOpen() {
         return this.accountIsOpen;
@@ -46,6 +54,10 @@ public class Account {
 
     public ArrayList<String> getTransactionHistory() {
         return this.transactionHistory;
+    }
+
+    public String getLastTransaction() {
+        return this.transactionHistory.get(transactionHistory.size()-1);
     }
 
     public void setBalance(Double newBalance) {
