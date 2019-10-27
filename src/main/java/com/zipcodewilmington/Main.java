@@ -5,8 +5,10 @@ package com.zipcodewilmington;
  */
 public class Main {
     private static Boolean atmIsRunning = true;
-
+    private static UserVillage userVillage = new UserVillage();
     public static void main(String[] args){
+
+
         while(atmIsRunning) {
             Console.println("Welcome to the ATM");
             // 0 : login
@@ -30,6 +32,7 @@ public class Main {
         switch (action) {
             case 0:
                 //login
+
             case 1:
                 //register
             case 2:
@@ -54,5 +57,10 @@ public class Main {
                 break;
             case 2:
         }
+    }
+    public Boolean logUserIn() {
+        String username = Console.getStringInput("username: ");
+        String password = Console.getStringInput("password: ");
+        return userVillage.matchUsernameAndPassword(username,password);
     }
 }
