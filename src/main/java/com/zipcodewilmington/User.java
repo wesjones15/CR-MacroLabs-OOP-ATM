@@ -28,12 +28,16 @@ public class User {
     public void setUsername(String username){this.username = username; }
 
     //TODO write method for open checking account
+    // set boolean accountIsOpen to true
 
     //TODO write method for open savings account
 
     //TODO write method for open investments account
 
-    //TODO write method for close checking account :
+    //TODO write method for close checking account
+    // verify account is empty
+    // replace accounts[0] with empty checking account object
+    // set boolean accountIsOpen to false
 
     //TODO write method for close savings account
 
