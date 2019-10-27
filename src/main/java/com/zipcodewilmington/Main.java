@@ -22,6 +22,10 @@ public class Main {
             while (userIsLoggedIn) {
                 // do something
                 Console.println(String.format("hello %s, you are now logged in", currentUserUsername));
+
+//                for(User user : userVillage.getUsersList()) {
+//                    Console.println(user.getUsername() + user.getPassword() + user.getUserId());
+//                }
                 Console.println("Options\n\t0 : logout");
                 action = Console.getIntegerInput("Choose an action: ");
                 executeUserAction(action);
@@ -41,6 +45,7 @@ public class Main {
         switch (action) {
             case 0:
                 //login
+                //TODO move this into logUserIn method
                 if (logUserIn()) {
                     currentUser = userVillage.getUserByUsername(currentUserUsername);
                     userIsLoggedIn = true;
@@ -48,7 +53,9 @@ public class Main {
                 break;
             case 1:
                 //register
+                //TODO move this into createUser method maybe
                 currentUser = createUser();
+                Console.println(String.format("Welcome %s",currentUser.getUsername()));
                 userIsLoggedIn = true;
                 break;
             case 2:
@@ -71,7 +78,11 @@ public class Main {
                         //
             case 0:
                 // logout
+                userVillage.updateUser(currentUser,currentUser.getUserId());
+//                Console.println(currentUser.getUsername()+" "+currentUser.getUserId());
                 userIsLoggedIn = false;
+                currentUser = null;
+                currentUserUsername = "";
                 break;
             case 1:
                 break;
