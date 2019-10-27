@@ -14,11 +14,12 @@ public class UserVillage {
         users.add(new User(username, password, users.size()));
     }
 
+    // removeUser should call updateUser and update with new empty user object
     public void updateUser(User updatedUser, Integer userId) {
         String currentUserUsername = getUserById(userId).getUsername();
         String updatedUserUsername = updatedUser.getUsername();
         // this makes sure that the correct user is being updated
-        if (currentUserUsername == updatedUserUsername) {
+        if (currentUserUsername.equals(updatedUserUsername)) {
             users.set(userId, updatedUser);
         }
         else {
@@ -33,7 +34,7 @@ public class UserVillage {
     public User getUserByUsername(String username) {
         int userId = 0;
         for (User user : users) {
-            if (user.getUsername() == username) {
+            if (user.getUsername().equals(username)) {
                 break;
             }
             userId += 1;

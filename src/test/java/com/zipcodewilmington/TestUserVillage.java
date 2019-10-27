@@ -7,11 +7,24 @@ public class TestUserVillage {
     //TODO create test for constructor
     @Test
     public void constructorTest() {
-
+        UserVillage userVillage = new UserVillage();
+        // should initialize users ArrayList and add a default user
+        int actual = userVillage.getUsersList().size();
+        int expected = 1;
+        Assert.assertEquals(expected, actual);
     }
 
     //TODO create test for createNewUser
+    @Test
     public void createNewUserTest() {
+        UserVillage userVillage = new UserVillage(); // default user is added at index 0
+        for (int i = 0; i < 10; i++) {
+            userVillage.createNewUser("user" + i, "pass" + i);
+        }
+        int actual = userVillage.getUsersList().size();
+        int expected = 11;
+        Assert.assertEquals(expected, actual);
+
 
     }
 
