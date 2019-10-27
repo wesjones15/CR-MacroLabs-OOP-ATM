@@ -61,4 +61,55 @@ public class TestUser {
         Integer actual  = user.getUserId();
         Assert.assertEquals(expected,actual);
     }
+
+    @Test
+    public void openCheckingAccountTest() {
+        User user = new User("wes", "wes", 1);
+        user.openCheckingAccount();
+        Double actual = user.getCheckingAccount().getBalance();
+        Double expected = 0.00;
+        Assert.assertEquals(expected, actual, 2);
+    }
+
+    @Test
+    public void openSavingsAccountTest() {
+        User user = new User("wes", "wes", 1);
+        user.openSavingsAccount();
+        Double actual = user.getSavingsAccount().getBalance();
+        Double expected = 0.00;
+        Assert.assertEquals(expected, actual, 2);
+    }
+
+    @Test
+    public void openInvestmentsAccountTest() {
+        User user = new User("wes", "wes", 1);
+        user.openInvestmentsAccount();
+        Double actual = user.getInvestmentsAccount().getBalance();
+        Double expected = 0.00;
+        Assert.assertEquals(expected, actual, 2);
+    }
+
+    @Test
+    public void getCheckingAccountTest() {
+        User user = new User("wes", "wes", 1);
+        user.openCheckingAccount();
+        Account account = user.getCheckingAccount();
+        Assert.assertTrue(account instanceof Checking);
+    }
+
+    @Test
+    public void getSavingsAccountTest() {
+        User user = new User("wes", "wes", 1);
+        user.openSavingsAccount();
+        Account account = user.getSavingsAccount();
+        Assert.assertTrue(account instanceof Savings);
+    }
+
+    @Test
+    public void getInvestmentsAccountTest() {
+        User user = new User("wes", "wes", 1);
+        user.openInvestmentsAccount();
+        Account account = user.getInvestmentsAccount();
+        Assert.assertTrue(account instanceof Investments);
+    }
 }

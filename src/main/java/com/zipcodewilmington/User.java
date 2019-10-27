@@ -31,7 +31,7 @@ public class User {
     public void openCheckingAccount() {
         //check if existing account lives here
         accounts[0] = new Checking(0.00, this.getUserId());
-        String message = String.format("New Checking account opened for %s, \n Current Balance: $ %8.2d", username, accounts[0].getBalance());
+        String message = String.format("New Checking account opened for %s, \n Current Balance: $ %8.2f", username, accounts[0].getBalance());
         Console.println(message);
     }
     // set boolean accountIsOpen to true
@@ -40,14 +40,14 @@ public class User {
     public void openSavingsAccount() {
         //check if existing account lives here
         accounts[1] = new Savings(0.00, this.getUserId());
-        String message = String.format("New Savings account opened for %s, \n Current Balance: $ %8.2d", username, accounts[1].getBalance());
+        String message = String.format("New Savings account opened for %s, \n Current Balance: $ %8.2f", username, accounts[1].getBalance());
         Console.println(message);
     }
     //TODO write method for open investments account
     public void openInvestmentsAccount() {
         //check if existing account lives here
         accounts[2] = new Investments(0.00, this.getUserId());
-        String message = String.format("New Investments account opened for %s, \n Current Balance: $ %8.2d", username, accounts[2].getBalance());
+        String message = String.format("New Investments account opened for %s, \n Current Balance: $ %8.2f", username, accounts[2].getBalance());
         Console.println(message);
     }
     //TODO write method for close checking account
@@ -60,9 +60,15 @@ public class User {
     //TODO write method for close investments account
 
     //TODO write method for get checking account : return accounts[0]
-
+    public Account getCheckingAccount() {
+        return this.accounts[0];
+    }
     //TODO write method for get savings account : return accounts[1]
-
+    public Account getSavingsAccount() {
+        return this.accounts[1];
+    }
     //TODO write method for get investments account : return accounts[2]
-
+    public Account getInvestmentsAccount() {
+        return this.accounts[2];
+    }
 }
