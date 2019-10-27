@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Account {
     private Double balance;
     private Integer userId;
-    private Boolean accountIsOpen;
+    private Boolean accountIsOpen = false;
     private ArrayList<String> transactionHistory;
 
     // constructor

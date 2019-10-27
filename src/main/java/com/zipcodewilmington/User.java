@@ -59,6 +59,8 @@ public class User {
 
     //TODO write method for close investments account
 
+    public Account[] getAccounts() {return accounts;}
+
     //TODO write method for get checking account : return accounts[0]
     public Account getCheckingAccount() {
         return this.accounts[0];

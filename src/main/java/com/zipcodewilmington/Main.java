@@ -23,10 +23,8 @@ public class Main {
                 // do something
                 Console.println(String.format("hello %s, you are now logged in", currentUserUsername));
 
-//                for(User user : userVillage.getUsersList()) {
-//                    Console.println(user.getUsername() + user.getPassword() + user.getUserId());
-//                }
-                Console.println("Options\n\t0 : logout");
+
+                Console.println("Options\n\t1 : access account\n\t2 : open account\n\t0 : logout");
                 action = Console.getIntegerInput("Choose an action: ");
                 executeUserAction(action);
             }
@@ -85,11 +83,28 @@ public class Main {
                 currentUserUsername = "";
                 break;
             case 1:
+                // access account
                 break;
             case 2:
+                // open account
                 break;
         }
     }
+
+    public static void chooseAccountAction(int action) {
+        StringBuilder message = new StringBuilder();
+        message.append("Choose your account\n");
+        for (Account account : currentUser.getAccounts()) {
+            if (account.checkIfAccountIsOpen()) {
+
+            }
+        }
+        //checking
+        //savings
+        //investments
+    }
+
+
     public static Boolean logUserIn() {
         currentUserUsername = Console.getStringInput("username: ");
         String password = Console.getStringInput("password: ");

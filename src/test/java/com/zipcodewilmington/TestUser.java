@@ -63,13 +63,20 @@ public class TestUser {
     }
 
     @Test
-    public void openCheckingAccountTest() {
+    public void openCheckingAccountTest1() {
         User user = new User("wes", "wes", 1);
         user.openCheckingAccount();
         Double actual = user.getCheckingAccount().getBalance();
         Double expected = 0.00;
         Assert.assertEquals(expected, actual, 2);
     }
+//    @Test
+//    public void openCheckingAccountTest2() {
+//        User user = new User("wes", "wes", 1);
+//        user.openCheckingAccount();
+//        // try to open checking account when account is already open
+//        user.openCheckingAccount();
+//    }
 
     @Test
     public void openSavingsAccountTest() {
@@ -87,6 +94,17 @@ public class TestUser {
         Double actual = user.getInvestmentsAccount().getBalance();
         Double expected = 0.00;
         Assert.assertEquals(expected, actual, 2);
+    }
+
+    @Test
+    public void getAccountsTest() {
+        User user = new User("wes", "wes", 1);
+        user.openCheckingAccount();
+        user.openSavingsAccount();
+        user.openInvestmentsAccount();
+        for (Account account : user.getAccounts()) {
+            Assert.assertTrue(account instanceof Account);
+        }
     }
 
     @Test
