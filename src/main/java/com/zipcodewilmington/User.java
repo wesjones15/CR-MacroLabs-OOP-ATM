@@ -30,7 +30,7 @@ public class User {
     //TODO write method for open checking account
     public void openCheckingAccount() {
         //check if existing account lives here
-        accounts[0] = new Checking(0.00, this.getUserId());
+        accounts[0] = new Checking(0.00, this.getUserId(), 0);
         String message = String.format("New Checking account opened for %s, \n Current Balance: $ %8.2f", username, accounts[0].getBalance());
         Console.println(message);
     }
@@ -39,14 +39,14 @@ public class User {
     //TODO write method for open savings account
     public void openSavingsAccount() {
         //check if existing account lives here
-        accounts[1] = new Savings(0.00, this.getUserId());
+        accounts[1] = new Savings(0.00, this.getUserId(), 1);
         String message = String.format("New Savings account opened for %s, \nCurrent Balance: $ %8.2f", username, accounts[1].getBalance());
         Console.println(message);
     }
     //TODO write method for open investments account
     public void openInvestmentsAccount() {
         //check if existing account lives here
-        accounts[2] = new Investments(0.00, this.getUserId());
+        accounts[2] = new Investments(0.00, this.getUserId(), 2);
         String message = String.format("New Investments account opened for %s, \n Current Balance: $ %8.2f", username, accounts[2].getBalance());
         Console.println(message);
     }

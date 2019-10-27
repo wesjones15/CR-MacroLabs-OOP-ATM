@@ -5,20 +5,22 @@ import java.util.ArrayList;
 public class Account {
     private Double balance;
     private Integer userId;
+    private Integer accountId;
     private Boolean accountIsOpen = false;
     private ArrayList<String> transactionHistory;
 
     // constructor
-    public Account(Double balance, Integer userId) {
+    public Account(Double balance, Integer userId, Integer accountId) {
         this.balance = balance;
         this.userId = userId;
+        this.accountId = accountId;
         this.accountIsOpen = true;
         this.transactionHistory = new ArrayList<String>();
     }
 
-    public Account openAccount(Integer userId) {
+    public Account openAccount(Integer userId, Integer accountId) {
         Double balance = Console.getDoubleInput("Enter your initial balance: ");
-        return new Account(balance, userId);
+        return new Account(balance, userId, accountId);
     }
 
     //TODO write closeAccount method
@@ -71,5 +73,7 @@ public class Account {
     public Integer getUserId() {
         return this.userId;
     }
+
+    public Integer getAccountId() { return this.accountId; }
 
 }

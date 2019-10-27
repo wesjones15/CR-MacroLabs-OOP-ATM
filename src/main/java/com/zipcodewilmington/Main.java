@@ -112,18 +112,22 @@ public class Main {
                 break;
             case 2:
                 // deposit
-                Console.println("Deposit Into Account");
+                Console.println("Deposit Into Account "+accountNames[currentAccount.getAccountId()]);
                 depositToAccount();
+
                 break;
             case 3:
                 // withdraw
+                Console.println("Withdraw From Account "+accountNames[currentAccount.getAccountId()]);
                 withDrawFromAccount();
                 break;
             case 4:
                 // transfer to other account
+                Console.println("Transfer From Account "+accountNames[currentAccount.getAccountId()]);
                 selectTransferTarget();
                 break;
         }
+        currentAccount = null;
     }
 
     public static void depositToAccount() {
@@ -170,8 +174,26 @@ public class Main {
         User sourceUser = currentUser;
         Account sourceAccount = currentAccount;
         Account targetAccount = selectCurrentAccount(sourceUser);
-        // withdraw from sourceAccount
-        // deposit to targetAccount
+        Double amountToTransfer = Console.getDoubleInput("Enter amount to transfer: ");
+
+        Double sourceOldBalance = sourceAccount.getBalance();
+        Double sourceNewBalance = sourceOldBalance - amountToTransfer;
+
+        Double targetOldBalance = targetAccount.getBalance();
+        Double targetNewBalance = targetOldBalance + amountToTransfer;
+
+        int targetAccountId = targetAccount.getAccountId();
+        sourceUser.getAccounts()[targetAccountId].setBalance(targetNewBalance);
+        int sourceAccountId = sourceAccount.getAccountId();
+        sourceUser.getAccounts()[sourceAccountId].setBalance(sourceNewBalance);
+        // create transaction report for sourceAccount
+        String sourceTransactionReport = sourceUser.getAccounts()[sourceAccountId].buildTransactionReport(sourceOldBalance, sourceNewBalance, amountToTransfer, "transfer to "+accountNames[targetAccountId]);
+        sourceUser.getAccounts()[sourceAccountId].addTransactionReportToTransactionHistory(sourceTransactionReport);
+        // create transaction report for targetAccount
+        String targetTransactionReport = sourceUser.getAccounts()[targetAccountId].buildTransactionReport(targetOldBalance,targetNewBalance,amountToTransfer, "transfer from "+accountNames[sourceAccountId]);
+        sourceUser.getAccounts()[targetAccountId].addTransactionReportToTransactionHistory(targetTransactionReport);
+        // update users
+        userVillage.updateUser(sourceUser, sourceUser.getUserId());
         // create transaction report
 
         // update user
@@ -184,11 +206,25 @@ public class Main {
         String targetUsername = Console.getStringInput("Enter username you wish to transfer to: ");
         User targetUser = userVillage.getUserByUsername(targetUsername);
         Account targetAccount = selectCurrentAccount(targetUser);
+        Double amountToTransfer = Console.getDoubleInput("Enter amount to transfer: ");
+        Double sourceOldBalance = sourceAccount.getBalance();
+        Double sourceNewBalance = sourceOldBalance - amountToTransfer;
+        Double targetOldBalance = targetAccount.getBalance();
+        Double targetNewBalance = targetOldBalance + amountToTransfer;
+
         // withdraw from sourceAccount
         // deposit to targetAccount
+        // update accounts
+        int targetAccountId = targetAccount.getAccountId();
+        targetUser.getAccounts()[targetAccountId].setBalance(targetNewBalance);
+        int sourceAccountId = sourceAccount.getAccountId();
+        sourceUser.getAccounts()[sourceAccountId].setBalance(sourceNewBalance);
         // create transaction report for sourceAccount
+        String sourceTransactionReport = sourceUser.getAccounts()[sourceAccountId].buildTransactionReport(sourceOldBalance, sourceNewBalance, amountToTransfer, "transfer to "+targetUsername);
+        sourceUser.getAccounts()[sourceAccountId].addTransactionReportToTransactionHistory(sourceTransactionReport);
         // create transaction report for targetAccount
-        // update account
+        String targetTransactionReport = targetUser.getAccounts()[targetAccountId].buildTransactionReport(targetOldBalance,targetNewBalance,amountToTransfer, "transfer from "+sourceUser.getUsername());
+        targetUser.getAccounts()[targetAccountId].addTransactionReportToTransactionHistory(targetTransactionReport);
         // update users
         userVillage.updateUser(sourceUser, sourceUser.getUserId());
         userVillage.updateUser(targetUser, targetUser.getUserId());
