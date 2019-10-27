@@ -93,12 +93,16 @@ public class Main {
 
     public static void chooseAccountAction(int action) {
         StringBuilder message = new StringBuilder();
-        message.append("Choose your account\n");
+        message.append("Options\n");
+        int idx = 0;
         for (Account account : currentUser.getAccounts()) {
             if (account.checkIfAccountIsOpen()) {
-
+                idx += 1;
+                message.append(String.format("\t%s : %s\n", idx, account.getClass()));
             }
         }
+        Console.println(message.toString());
+        Console.getIntegerInput("select account: ");
         //checking
         //savings
         //investments
