@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.zipcodewilmington</OriginalElement>
+  <nodes>
+    <node x="58.0" y="343.0">com.zipcodewilmington.Savings</node>
+    <node x="0.0" y="417.0">com.zipcodewilmington.User</node>
+    <node x="0.0" y="0.0">com.zipcodewilmington.Account</node>
+    <node x="672.0" y="417.0">com.zipcodewilmington.TestUser</node>
+    <node x="498.0" y="0.0">com.zipcodewilmington.Main</node>
+    <node x="299.0" y="343.0">com.zipcodewilmington.Investments</node>
+    <node x="444.0" y="799.0">com.zipcodewilmington.Console</node>
+    <node x="174.0" y="343.0">com.zipcodewilmington.Checking</node>
+    <node x="746.0" y="799.0">com.zipcodewilmington.TestMain</node>
+    <node x="0.0" y="799.0">com.zipcodewilmington.UserVillage</node>
+    <node x="326.0" y="417.0">com.zipcodewilmington.TestUserVillage</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.zipcodewilmington.Investments" target="com.zipcodewilmington.Account">
+      <point x="0.0" y="-14.5" />
+      <point x="360.5" y="318.0" />
+      <point x="377.5" y="318.0" />
+      <point x="151.0" y="146.5" />
+    </edge>
+    <edge source="com.zipcodewilmington.Savings" target="com.zipcodewilmington.Account">
+      <point x="0.0" y="-14.5" />
+      <point x="106.0" y="318.0" />
+      <point x="75.5" y="318.0" />
+      <point x="-151.0" y="146.5" />
+    </edge>
+    <edge source="com.zipcodewilmington.Checking" target="com.zipcodewilmington.Account">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="146.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.3930533319165113" x="661.3231685692482" y="743.9596697751284" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
