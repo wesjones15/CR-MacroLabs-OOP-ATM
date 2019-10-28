@@ -11,7 +11,6 @@ public class Main {
     private static String currentUserUsername;
     private static Integer action;
     private static Account currentAccount;
-    private static final String[] accountNames = {"Checking", "Savings", "Investments"};
 
     public static void main(String[] args){
         Console.println("Welcome to the ATM");
@@ -112,19 +111,24 @@ public class Main {
                 break;
             case 2:
                 // deposit
-                Console.println("Deposit Into Account "+accountNames[currentAccount.getAccountId()]);
+                Console.println("Deposit Into Account "+currentAccount.getName());
                 depositToAccount();
 
                 break;
             case 3:
                 // withdraw
-                Console.println("Withdraw From Account "+accountNames[currentAccount.getAccountId()]);
+                Console.println("Withdraw From Account "+currentAccount.getName());
                 withDrawFromAccount();
                 break;
             case 4:
                 // transfer to other account
-                Console.println("Transfer From Account "+accountNames[currentAccount.getAccountId()]);
+                Console.println("Transfer From Account "+currentAccount.getName());
                 selectTransferTarget();
+                break;
+            case 5:
+                // close account
+                Console.println("Close Account "+currentAccount.getName());
+                closeAccount(currentAccount);
                 break;
         }
         currentAccount = null;
@@ -138,7 +142,6 @@ public class Main {
         // transaction report
         String transactionReport = currentAccount.buildTransactionReport(oldBalance, newBalance, amountToDeposit, "deposit");
         currentAccount.addTransactionReportToTransactionHistory(transactionReport);
-        Console.println(transactionReport);
         userVillage.updateUser(currentUser, currentUser.getUserId());
     }
 
@@ -149,7 +152,6 @@ public class Main {
         currentAccount.setBalance(newBalance);
         String transactionReport = currentAccount.buildTransactionReport(oldBalance, newBalance, amountToWithdraw, "withdraw");
         currentAccount.addTransactionReportToTransactionHistory(transactionReport);
-        Console.println(transactionReport);
         userVillage.updateUser(currentUser, currentUser.getUserId());
     }
 
@@ -183,19 +185,15 @@ public class Main {
         Double targetNewBalance = targetOldBalance + amountToTransfer;
 
         int targetAccountId = targetAccount.getAccountId();
-        sourceUser.getAccounts()[targetAccountId].setBalance(targetNewBalance);
+        sourceUser.getAccountById(targetAccountId).setBalance(targetNewBalance);
         int sourceAccountId = sourceAccount.getAccountId();
-        sourceUser.getAccounts()[sourceAccountId].setBalance(sourceNewBalance);
+        sourceUser.getAccountById(sourceAccountId).setBalance(sourceNewBalance);
         // create transaction report for sourceAccount
-        String sourceTransactionReport = sourceUser.getAccounts()[sourceAccountId].buildTransactionReport(sourceOldBalance, sourceNewBalance, amountToTransfer, "transfer to "+accountNames[targetAccountId]);
-        sourceUser.getAccounts()[sourceAccountId].addTransactionReportToTransactionHistory(sourceTransactionReport);
+        String sourceTransactionReport = sourceUser.getAccountById(sourceAccountId).buildTransactionReport(sourceOldBalance, sourceNewBalance, amountToTransfer, "transfer to "+targetAccount.getName());
+        sourceUser.getAccountById(sourceAccountId).addTransactionReportToTransactionHistory(sourceTransactionReport);
         // create transaction report for targetAccount
-        String targetTransactionReport = sourceUser.getAccounts()[targetAccountId].buildTransactionReport(targetOldBalance,targetNewBalance,amountToTransfer, "transfer from "+accountNames[sourceAccountId]);
-        sourceUser.getAccounts()[targetAccountId].addTransactionReportToTransactionHistory(targetTransactionReport);
-        // update users
-        userVillage.updateUser(sourceUser, sourceUser.getUserId());
-        // create transaction report
-
+        String targetTransactionReport = sourceUser.getAccountById(targetAccountId).buildTransactionReport(targetOldBalance,targetNewBalance,amountToTransfer, "transfer from "+sourceAccount.getName());
+        sourceUser.getAccountById(targetAccountId).addTransactionReportToTransactionHistory(targetTransactionReport);
         // update user
         userVillage.updateUser(sourceUser, sourceUser.getUserId());
     }
@@ -216,15 +214,15 @@ public class Main {
         // deposit to targetAccount
         // update accounts
         int targetAccountId = targetAccount.getAccountId();
-        targetUser.getAccounts()[targetAccountId].setBalance(targetNewBalance);
+        targetUser.getAccountById(targetAccountId).setBalance(targetNewBalance);
         int sourceAccountId = sourceAccount.getAccountId();
-        sourceUser.getAccounts()[sourceAccountId].setBalance(sourceNewBalance);
+        sourceUser.getAccountById(sourceAccountId).setBalance(sourceNewBalance);
         // create transaction report for sourceAccount
-        String sourceTransactionReport = sourceUser.getAccounts()[sourceAccountId].buildTransactionReport(sourceOldBalance, sourceNewBalance, amountToTransfer, "transfer to "+targetUsername);
-        sourceUser.getAccounts()[sourceAccountId].addTransactionReportToTransactionHistory(sourceTransactionReport);
+        String sourceTransactionReport = sourceUser.getAccountById(sourceAccountId).buildTransactionReport(sourceOldBalance, sourceNewBalance, amountToTransfer, "transfer to "+targetUsername);
+        sourceUser.getAccountById(sourceAccountId).addTransactionReportToTransactionHistory(sourceTransactionReport);
         // create transaction report for targetAccount
-        String targetTransactionReport = targetUser.getAccounts()[targetAccountId].buildTransactionReport(targetOldBalance,targetNewBalance,amountToTransfer, "transfer from "+sourceUser.getUsername());
-        targetUser.getAccounts()[targetAccountId].addTransactionReportToTransactionHistory(targetTransactionReport);
+        String targetTransactionReport = targetUser.getAccountById(targetAccountId).buildTransactionReport(targetOldBalance,targetNewBalance,amountToTransfer, "transfer from "+sourceUser.getUsername());
+        targetUser.getAccountById(targetAccountId).addTransactionReportToTransactionHistory(targetTransactionReport);
         // update users
         userVillage.updateUser(sourceUser, sourceUser.getUserId());
         userVillage.updateUser(targetUser, targetUser.getUserId());
@@ -233,9 +231,9 @@ public class Main {
     public static Account selectCurrentAccount(User user) {
         StringBuilder message = new StringBuilder();
         message.append("Options\n");
-        for (int i = 0; i < user.getAccounts().length; i++) {
-            if (user.getAccounts()[i] != null && user.getAccounts()[i] != currentAccount) {
-                message.append(String.format("\t%s : %s\n", i, accountNames[i]));
+        for (Account account : currentUser.getAccounts()) {
+            if (account != null && account != currentAccount) {
+                message.append(String.format("\t%s : %s\n", account.getAccountId(), account.getName()));
             }
         }
         Console.println(message.toString());
@@ -244,6 +242,7 @@ public class Main {
     }
 
     public static Integer selectAccountToOpen() {
+        String[] accountNames = {"Checking", "Savings", "Investments"};
         StringBuilder message = new StringBuilder();
         message.append("Options\n");
         for (int i = 0; i < currentUser.getAccounts().length; i++) {
@@ -252,7 +251,7 @@ public class Main {
             }
         }
         Console.println(message.toString());
-        int accountIndex = Console.getIntegerInput("select account: ");
+        int accountIndex = Console.getIntegerInput("Select account: ");
         return accountIndex;
     }
 
@@ -270,6 +269,12 @@ public class Main {
                 break;
         }
         userVillage.updateUser(currentUser, currentUser.getUserId());
+    }
+
+    public static void closeAccount(Account account) {
+        currentUser.getAccountById(account.getAccountId()).closeAccount(account,currentUser.getUserId());
+        userVillage.updateUser(currentUser, currentUser.getUserId());
+        Console.println("Successfully closed account "+account.getName());
     }
 
 

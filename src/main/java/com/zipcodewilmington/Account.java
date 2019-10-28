@@ -8,6 +8,7 @@ public class Account {
     private Integer accountId;
     private Boolean accountIsOpen = false;
     private ArrayList<String> transactionHistory;
+    private static final String[] accountNames = {"Checking", "Savings", "Investments"};
 
     // constructor
     public Account(Double balance, Integer userId, Integer accountId) {
@@ -27,9 +28,10 @@ public class Account {
     public void closeAccount(Account account, Integer userId) {
         if (account.getBalance() == 0.00 && account.getUserId() == userId) {
             account.accountIsOpen = false;
-            // create transaction report
+            String transactionReport = account.buildTransactionReport(0.00,0.00,0.00,"close account");
+            account.addTransactionReportToTransactionHistory(transactionReport);
         } else {
-            // your balance must be $0.00 to close your account
+             Console.println("your balance must be $0.00 to close your account");
         }
     }
 
@@ -39,6 +41,8 @@ public class Account {
 
     public String buildTransactionReport(Double oldBalance, Double newBalance, Double amountTransferred, String transactionType) {
         StringBuilder transactionReport = new StringBuilder();
+
+        transactionReport.append(String.format("Transaction: %s $%.2f\n\tOld Balance: $%.2f\n\tNew Balance: %.2f", transactionType, amountTransferred, oldBalance, newBalance));
         //TODO write method
         // need different report structure depending on type of transaction
         // withdraw $xx.xx from xxxx account
@@ -52,6 +56,7 @@ public class Account {
 
     public void addTransactionReportToTransactionHistory(String transactionReport) {
         transactionHistory.add(transactionReport);
+        Console.println("\n\n"+transactionReport+"\n\n");
     }
 
     public ArrayList<String> getTransactionHistory() {
@@ -75,5 +80,7 @@ public class Account {
     }
 
     public Integer getAccountId() { return this.accountId; }
+
+    public String getName() { return accountNames[this.accountId];}
 
 }

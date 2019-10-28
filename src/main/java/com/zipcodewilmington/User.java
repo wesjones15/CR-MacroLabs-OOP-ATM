@@ -27,7 +27,11 @@ public class User {
 
     public void setUsername(String username){this.username = username; }
 
-    //TODO write method for open checking account
+    //TODO write method for openAccountById
+//    public void openAccountById(Integer accountId) {
+//        accounts[accountId] = new
+//    }
+
     public void openCheckingAccount() {
         //check if existing account lives here
         accounts[0] = new Checking(0.00, this.getUserId(), 0);
@@ -36,14 +40,12 @@ public class User {
     }
     // set boolean accountIsOpen to true
 
-    //TODO write method for open savings account
     public void openSavingsAccount() {
         //check if existing account lives here
         accounts[1] = new Savings(0.00, this.getUserId(), 1);
         String message = String.format("New Savings account opened for %s, \nCurrent Balance: $ %8.2f", username, accounts[1].getBalance());
         Console.println(message);
     }
-    //TODO write method for open investments account
     public void openInvestmentsAccount() {
         //check if existing account lives here
         accounts[2] = new Investments(0.00, this.getUserId(), 2);
@@ -60,6 +62,10 @@ public class User {
     //TODO write method for close investments account
 
     public Account[] getAccounts() {return accounts;}
+
+    public Account getAccountById(Integer accountId) {
+        return accounts[accountId];
+    }
 
     //TODO write method for get checking account : return accounts[0]
     public Account getCheckingAccount() {
