@@ -19,15 +19,13 @@ public class Main {
             Console.println("Options\n\t0 : login\n\t1 : register\n\t2 : exit");
             action = Console.getIntegerInput("Choose an action: ");
             executeLoginAction(action);
-
+            if (userIsLoggedIn) Console.println(String.format("hello %s, you are now logged in", currentUserUsername));
             while (userIsLoggedIn) {
-                // do something
-                Console.println(String.format("hello %s, you are now logged in", currentUserUsername));
-
-
+                Console.println("Current User: " + currentUser.getUsername());
                 Console.println("Options\n\t1 : access account\n\t2 : open account\n\t0 : logout");
                 action = Console.getIntegerInput("Choose an action: ");
                 executeUserAction(action);
+//                Console.clear();
             }
 
 
@@ -82,6 +80,7 @@ public class Main {
 //                Console.println(currentUser.getUsername()+" "+currentUser.getUserId());
                 userIsLoggedIn = false;
                 currentUser = null;
+                currentAccount = null;
                 currentUserUsername = "";
                 break;
             case 1:
@@ -98,7 +97,7 @@ public class Main {
     }
 
     public static void selectTransaction() {
-        String message = "Options\n\t1 : check balance\n\t2 : deposit\n\t3 : withdraw\n\t4 : transfer to other account\n\t0 : back";
+        String message = "Options\n\t1 : check balance\n\t2 : deposit\n\t3 : withdraw\n\t4 : transfer to other account\n\t5 : view transaction history\n\t6 : see last transaction\n\t7 : close account\n\t0 : back";
         Console.println(message);
         Integer action = Console.getIntegerInput("Select option: ");
         switch (action) {
@@ -126,6 +125,16 @@ public class Main {
                 selectTransferTarget();
                 break;
             case 5:
+                // view transaction history
+                for (String report : currentAccount.getTransactionHistory()) {
+                    Console.println("\n"+report);
+                }
+                break;
+            case 6:
+                // view last transaction
+                Console.println(currentAccount.getLastTransaction());
+                break;
+            case 7:
                 // close account
                 Console.println("Close Account "+currentAccount.getName());
                 closeAccount(currentAccount);
@@ -136,7 +145,7 @@ public class Main {
 
     public static void depositToAccount() {
         Double oldBalance = currentAccount.getBalance();
-        Double amountToDeposit = Console.getDoubleInput("Enter deposit amount: ");
+        Double amountToDeposit = Console.getDoubleInput("Enter deposit amount: $");
         Double newBalance = oldBalance + amountToDeposit;
         currentAccount.setBalance(newBalance);
         // transaction report
@@ -147,7 +156,7 @@ public class Main {
 
     public static void withDrawFromAccount() {
         Double oldBalance = currentAccount.getBalance();
-        Double amountToWithdraw = Console.getDoubleInput("Enter amount to withdraw: ");
+        Double amountToWithdraw = Console.getDoubleInput("Enter amount to withdraw: $");
         Double newBalance = oldBalance - amountToWithdraw;
         currentAccount.setBalance(newBalance);
         String transactionReport = currentAccount.buildTransactionReport(oldBalance, newBalance, amountToWithdraw, "withdraw");
@@ -176,7 +185,7 @@ public class Main {
         User sourceUser = currentUser;
         Account sourceAccount = currentAccount;
         Account targetAccount = selectCurrentAccount(sourceUser);
-        Double amountToTransfer = Console.getDoubleInput("Enter amount to transfer: ");
+        Double amountToTransfer = Console.getDoubleInput("Enter amount to transfer: $");
 
         Double sourceOldBalance = sourceAccount.getBalance();
         Double sourceNewBalance = sourceOldBalance - amountToTransfer;
@@ -204,7 +213,7 @@ public class Main {
         String targetUsername = Console.getStringInput("Enter username you wish to transfer to: ");
         User targetUser = userVillage.getUserByUsername(targetUsername);
         Account targetAccount = selectCurrentAccount(targetUser);
-        Double amountToTransfer = Console.getDoubleInput("Enter amount to transfer: ");
+        Double amountToTransfer = Console.getDoubleInput("Enter amount to transfer: $");
         Double sourceOldBalance = sourceAccount.getBalance();
         Double sourceNewBalance = sourceOldBalance - amountToTransfer;
         Double targetOldBalance = targetAccount.getBalance();
@@ -274,7 +283,6 @@ public class Main {
     public static void closeAccount(Account account) {
         currentUser.getAccountById(account.getAccountId()).closeAccount(account,currentUser.getUserId());
         userVillage.updateUser(currentUser, currentUser.getUserId());
-        Console.println("Successfully closed account "+account.getName());
     }
 
 

@@ -20,18 +20,33 @@ public class Console {
 
     public static Integer getIntegerInput(String prompt) {
         Scanner scanner = new Scanner(System.in);
-        print(prompt);
-        Integer userInput = scanner.nextInt();
-        return userInput;
+        String userInput = "";
+        Boolean check = false;
+        do {
+            print(prompt);
+            userInput = scanner.nextLine();
+            check = userInput.matches("^\\d{0,9}$");
+        } while (!check);
+
+        return Integer.valueOf(userInput);
     }
 
     public static Double getDoubleInput(String prompt) {
         Scanner scanner = new Scanner(System.in);
-        print(prompt);
-        Double userInput = scanner.nextDouble();
-        //TODO add regex validation for 8.2d structure
-        // reference calculator lab for this
-        return userInput;
+        String userInput = "";
+        Boolean check = false;
+        do {
+            print(prompt);
+            userInput = scanner.nextLine();
+            check = userInput.matches("^\\d{0,8}(\\.\\d{1,2})?$");
+
+        } while (!check);
+
+        return Double.valueOf(userInput);
+    }
+
+    public static void clear() {
+        print("\n\n\n\n\n\n\n\n\n\n\n");
     }
 
 }

@@ -1,8 +1,11 @@
 package com.zipcodewilmington;
 
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class UserVillage {
+public class UserVillage /*implements Serializable */{
     private ArrayList<User> users;
 
     public UserVillage() {
@@ -71,4 +74,19 @@ public class UserVillage {
         }
         return uniqueUsername;
     }
+
+//    public void WriteObjectToFile(Object serObj) {
+//
+//        try {
+//
+//            FileOutputStream fileOut = new FileOutputStream(filepath);
+//            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+//            objectOut.writeObject(serObj);
+//            objectOut.close();
+//            System.out.println("The Object  was succesfully written to a file");
+//
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+//    }
 }
