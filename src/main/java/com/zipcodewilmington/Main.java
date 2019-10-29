@@ -85,6 +85,10 @@ public class Main {
                 break;
             case 1:
                 // access account
+                if(currentUser.getCheckingAccount() == null&& currentUser.getSavingsAccount() == null && currentUser.getInvestmentsAccount() == null){
+                    Console.println("No current accounts, Select account to open : ");
+                    selectAccountToOpen();
+                }
                 currentAccount = selectCurrentAccount(currentUser);
                 selectTransaction();
                 break;
@@ -292,7 +296,7 @@ public class Main {
         return userVillage.matchUsernameAndPassword(currentUserUsername,password);
     }
     public static User createUser() {
-        currentUserUsername = Console.getStringInput("username: ");
+        currentUserUsername = Console.getStringInput("username: "); //
         String password = Console.getStringInput("password: ");
         userVillage.createNewUser(currentUserUsername, password);
         return userVillage.getUserByUsername(currentUserUsername);
