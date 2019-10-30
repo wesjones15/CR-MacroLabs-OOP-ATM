@@ -14,17 +14,17 @@ public class Main {
         Console.println("Welcome to the ATM");
 
         while(atmIsRunning) {
-            Console.println("Options\n\t0 : login\n\t1 : register\n\t2 : exit");
+            Console.println("Options\n\t0 : Login\n\t1 : Register\n\t2 : Exit ATM");
             action = Console.getIntegerInput("Choose an action: ");
             User activeUser = executeLoginAction(action);
-            if (userIsLoggedIn) Console.println(String.format("hello %s, you are now logged in", currentUserUsername));
+            if (userIsLoggedIn) Console.println(String.format("Hello %s, you are now logged in", currentUserUsername));
 
             while (userIsLoggedIn) {
                 Console.println("Current User: " + activeUser.getUsername());
-                Console.println("Options\n\t1 : access account\n\t2 : open account\n\t3 : delete user\n\t0 : logout");
+                Console.println("Options\n\t1 : Access account\n\t2 : Open account\n\t3 : Delete user\n\t0 : Logout");
                 action = Console.getIntegerInput("Choose an action: ");
+                Console.clear();
                 executeUserAction(activeUser, action);
-//                Console.clear();
             }
         }
     }
@@ -76,7 +76,7 @@ public class Main {
                 break;
             case 3:
                 Console.println("Removing user " + currentUserUsername);
-                Console.println("returning to main menu\n");
+                Console.println("Returning to main menu.\n");
                 userVillage.removeUser(activeUser.getUserId());
                 userIsLoggedIn = false;
                 currentUserUsername = "";
@@ -93,6 +93,7 @@ public class Main {
                 message.append(String.format("\t%s : %s\n", i, accountNames[i]));
             }
         }
+        Console.println("Open Account\n");
         Console.println(message.toString());
         //TODO add check for if acc already open
         int accountIndex = Console.getIntegerInput("Select account: ");

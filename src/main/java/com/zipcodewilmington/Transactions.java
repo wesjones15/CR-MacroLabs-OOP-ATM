@@ -2,7 +2,7 @@ package com.zipcodewilmington;
 
 public class Transactions {
     public static UserVillage selectTransaction(UserVillage userVillage, Account activeAccount) {
-        String message = "Options\n\t1 : check balance\n\t2 : deposit\n\t3 : withdraw\n\t4 : transfer to other account\n\t5 : view transaction history\n\t6 : see last transaction\n\t7 : close account\n\t0 : back";
+        String message = "Options\n\t1 : Check balance\n\t2 : Deposit\n\t3 : Withdraw\n\t4 : Transfer to other account\n\t5 : View transaction history\n\t6 : See last transaction\n\t7 : Close account\n\t0 : Back";
         Console.println(message);
         Integer action = Console.getIntegerInput("Select option: ");
         switch (action) {
@@ -74,7 +74,7 @@ public class Transactions {
     }
 
     public static UserVillage selectTransferTarget(UserVillage userVillage, User sourceUser, Account sourceAccount) {
-        Console.println("Options\n\t0 : transfer to your other open accounts\n\t1 : transfer to another user");
+        Console.println("Options\n\t0 : Transfer to your other open accounts\n\t1 : Transfer to another user");
         int choice = Console.getIntegerInput("Select option: ");
         switch (choice) {
             case 0:
@@ -168,7 +168,7 @@ public class Transactions {
             }
         }
         Console.println(message.toString());
-        int accountIndex = Console.getIntegerInput("select account: ");
+        int accountIndex = Console.getIntegerInput("Select account: ");
         return activeUser.getAccounts()[accountIndex];
     }
 

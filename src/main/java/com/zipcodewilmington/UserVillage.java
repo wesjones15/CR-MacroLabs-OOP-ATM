@@ -56,8 +56,8 @@ public class UserVillage /*implements Serializable */{
         }
         if (userId+1 > users.size()) {
             userId = 0;
-            Console.println("user not found, returning default user instead of breaking");
-            // should raise user not found exception
+            Console.println("User not found, returning default user instead of breaking");
+            //TODO replace with try catch
         }
         return users.get(userId);
     }
@@ -90,7 +90,7 @@ public class UserVillage /*implements Serializable */{
 //
 //        try {
 //
-//            FileOutputStream fileOut = new FileOutputStream(filepath);
+//            FileOutputStream fileOut = new FileOutputStream("");
 //            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
 //            objectOut.writeObject(serObj);
 //            objectOut.close();

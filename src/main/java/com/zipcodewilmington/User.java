@@ -36,20 +36,20 @@ public class User {
     public void openCheckingAccount() {
         //check if existing account lives here
         accounts[0] = new Checking(0.00, this.getUserId(), 0);
-        String message = String.format("New Checking account opened for %s, \n Current Balance: $ %8.2f", username, accounts[0].getBalance());
+        String message = String.format("\nNew Checking account opened for %s. \n\tCurrent Balance: $ %8.2f", username, accounts[0].getBalance());
         Console.println(message);
     }
 
     public void openSavingsAccount() {
         //check if existing account lives here
         accounts[1] = new Savings(0.00, this.getUserId(), 1);
-        String message = String.format("New Savings account opened for %s, \nCurrent Balance: $ %8.2f", username, accounts[1].getBalance());
+        String message = String.format("\nNew Savings account opened for %s. \n\tCurrent Balance: $ %8.2f", username, accounts[1].getBalance());
         Console.println(message);
     }
     public void openInvestmentsAccount() {
         //check if existing account lives here
         accounts[2] = new Investments(0.00, this.getUserId(), 2);
-        String message = String.format("New Investments account opened for %s, \n Current Balance: $ %8.2f", username, accounts[2].getBalance());
+        String message = String.format("\nNew Investments account opened for %s. \n\tCurrent Balance: $ %8.2f", username, accounts[2].getBalance());
         Console.println(message);
     }
 
@@ -61,7 +61,7 @@ public class User {
             this.getAccountById(accountId).addTransactionReportToTransactionHistory(transactionReport);
             Console.println("Successfully closed account "+account.getName());
         } else {
-            Console.println("your balance must be $0.00 to close your account");
+            Console.println("Your balance must be $0.00 to close your account.");
         }
     }
 
