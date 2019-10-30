@@ -21,7 +21,7 @@ public class Main {
 
             while (userIsLoggedIn) {
                 Console.println("Current User: " + activeUser.getUsername());
-                Console.println("Options\n\t1 : access account\n\t2 : open account\n\t0 : logout");
+                Console.println("Options\n\t1 : access account\n\t2 : open account\n\t3 : delete user\n\t0 : logout");
                 action = Console.getIntegerInput("Choose an action: ");
                 executeUserAction(activeUser, action);
 //                Console.clear();
@@ -74,6 +74,13 @@ public class Main {
                 activeUser = openAccount(activeUser, accountIndex);
                 userVillage.updateUser(activeUser, activeUser.getUserId());
                 break;
+            case 3:
+                Console.println("Removing user " + currentUserUsername);
+                Console.println("returning to main menu\n");
+                userVillage.removeUser(activeUser.getUserId());
+                userIsLoggedIn = false;
+                currentUserUsername = "";
+                break;
         }
     }
 
@@ -105,11 +112,6 @@ public class Main {
         }
         return activeUser;
     }
-
-//    public static void closeAccount(User activeUser, Account account) {
-//        currentUser.closeAccountById(account.getAccountId());
-//        userVillage.updateUser(currentUser, currentUser.getUserId());
-//    }
 
     public static Boolean logUserIn() {
         currentUserUsername = Console.getStringInput("username: ");

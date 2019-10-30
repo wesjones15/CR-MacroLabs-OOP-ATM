@@ -20,7 +20,6 @@ public class UserVillage /*implements Serializable */{
 
     }
 
-    // removeUser should call updateUser and update with new empty user object
     public void updateUser(User updatedUser, Integer userId) {
         String currentUserUsername = getUserById(userId).getUsername();
         String updatedUserUsername = updatedUser.getUsername();
@@ -31,6 +30,10 @@ public class UserVillage /*implements Serializable */{
         else {
             Console.println("updateUser failed. usernames do not match");
         }
+    }
+
+    public void removeUser(Integer userId) {
+        users.set(userId, new User());
     }
 
     public void updateUserByAccount(Account account) {

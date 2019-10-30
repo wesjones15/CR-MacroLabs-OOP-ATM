@@ -60,7 +60,6 @@ public class Transactions {
         return activeAccount;
     }
 
-    //TODO make withdraw return updated account or updatedUser
     public static Account withDrawFromAccount(Account activeAccount) {
         Double oldBalance = activeAccount.getBalance();
         Double amountToWithdraw;

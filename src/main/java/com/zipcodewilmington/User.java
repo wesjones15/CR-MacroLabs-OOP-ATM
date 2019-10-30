@@ -6,13 +6,18 @@ public class User {
     private String password;
     private Account[] accounts;
 
-    public User(){}
+    public User(){
+        //
+    }
 
     public User( String username, String password, Integer userId){
         this.username = username;
         this.password = password;
         this.userId = userId;
-        this.accounts = new Account[3];//checking, savings, investment
+        this.accounts = new Account[3];
+        for (int i = 0; i < 3; i++) {
+            accounts[i] = new Account();
+        }
 
     }
     //ID
@@ -28,18 +33,12 @@ public class User {
 
     public void setUsername(String username){this.username = username; }
 
-    //TODO write method for openAccountById
-//    public void openAccountById(Integer accountId) {
-//        accounts[accountId] = new Account(00.00, this.getUserId(), accountId);
-//    }
-
     public void openCheckingAccount() {
         //check if existing account lives here
         accounts[0] = new Checking(0.00, this.getUserId(), 0);
         String message = String.format("New Checking account opened for %s, \n Current Balance: $ %8.2f", username, accounts[0].getBalance());
         Console.println(message);
     }
-    // set boolean accountIsOpen to true
 
     public void openSavingsAccount() {
         //check if existing account lives here
@@ -53,10 +52,6 @@ public class User {
         String message = String.format("New Investments account opened for %s, \n Current Balance: $ %8.2f", username, accounts[2].getBalance());
         Console.println(message);
     }
-    //TODO write method for close checking account
-    // verify account is empty
-    // replace accounts[0] with empty checking account object
-    // set boolean accountIsOpen to false
 
     public void closeAccountById(Integer accountId) {
         Account account = this.getAccountById(accountId);
