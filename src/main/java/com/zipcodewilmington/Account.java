@@ -25,16 +25,17 @@ public class Account {
     }
 
     //TODO write closeAccount method
-    public void closeAccount(Account account, Integer userId) {
-        if (account.getBalance() == 0.00 && account.getUserId() == userId) {
-            account.accountIsOpen = false;
-            String transactionReport = account.buildTransactionReport(0.00,0.00,0.00,"close account");
-            account.addTransactionReportToTransactionHistory(transactionReport);
-            Console.println("Successfully closed account "+account.getName());
-        } else {
-             Console.println("your balance must be $0.00 to close your account");
-        }
-    }
+//    public void closeAccount(Account account, Integer userId) {
+//        if (account.getBalance() == 0.00 && account.getUserId() == userId) {
+//            account.accountIsOpen = false;
+//            String transactionReport = account.buildTransactionReport(0.00,0.00,0.00,"close account");
+//            account.addTransactionReportToTransactionHistory(transactionReport);
+//            Console.println("Successfully closed account "+account.getName());
+//        } else {
+//             Console.println("your balance must be $0.00 to close your account");
+//        }
+//    }
+    public void toggleOpenAccount() { this.accountIsOpen = !this.accountIsOpen; }
 
     public Boolean checkIfAccountIsOpen() {
         return this.accountIsOpen;
