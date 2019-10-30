@@ -65,9 +65,11 @@ public class Main {
                 break;
             case 1:
                 // access account
-                Account activeAccount = Transactions.selectCurrentAccount(activeUser, null);
-                userVillage = Transactions.selectTransaction(userVillage, activeAccount);
-                break;
+                if (activeUser.getNumberOfOpenAccounts() > 0) {
+                    Account activeAccount = Transactions.selectCurrentAccount(activeUser, null);
+                    userVillage = Transactions.selectTransaction(userVillage, activeAccount);
+                    break;
+                }
             case 2:
                 // open account
                 int accountIndex = selectAccountToOpen(activeUser);
