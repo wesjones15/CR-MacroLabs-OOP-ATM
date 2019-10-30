@@ -10,10 +10,7 @@ public class Account {
     private ArrayList<String> transactionHistory;
     private static final String[] accountNames = {"Checking", "Savings", "Investments"};
 
-    // constructor
-    public Account() {
-        this.accountIsOpen = false;
-    }
+
     public Account(Double balance, Integer userId, Integer accountId) {
         this.balance = balance;
         this.userId = userId;

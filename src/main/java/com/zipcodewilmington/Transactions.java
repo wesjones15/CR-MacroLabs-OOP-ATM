@@ -79,8 +79,12 @@ public class Transactions {
         switch (choice) {
             case 0:
                 // select from own accounts
-                User updatedUser = transferToOwnAccount(sourceUser, sourceAccount);
-                userVillage.updateUser(updatedUser, updatedUser.getUserId());
+                //TODO wrap in if statement
+                //if getNumberOfOpenAccounts > 1
+                if (sourceUser.getNumberOfOpenAccounts() > 1) {
+                    User updatedUser = transferToOwnAccount(sourceUser, sourceAccount);
+                    userVillage.updateUser(updatedUser, updatedUser.getUserId());
+                }
                 break;
             case 1:
                 // select another user's account
@@ -123,38 +127,44 @@ public class Transactions {
     public static UserVillage transferToAnotherUsersAccount(UserVillage userVillage, User sourceUser, Account sourceAccount) {
         String targetUsername = Console.getStringInput("Enter username you wish to transfer to: ");
         User targetUser = userVillage.getUserByUsername(targetUsername);
-        Account targetAccount = selectCurrentAccount(targetUser, null);
-        Double sourceOldBalance = sourceAccount.getBalance();
-        Double amountToTransfer;
-        do {
-            amountToTransfer = Console.getDoubleInput("Enter amount to transfer: $");
-        } while (!verifyValidAmount(sourceOldBalance, amountToTransfer));
+        //TODO wrap in if statement
+        //check if target user has at least 1 open account
+        if (targetUser.getNumberOfOpenAccounts() > 0) {
 
-        Double sourceNewBalance = sourceOldBalance - amountToTransfer;
 
-        Double targetOldBalance = targetAccount.getBalance();
-        Double targetNewBalance = targetOldBalance + amountToTransfer;
+            Account targetAccount = selectCurrentAccount(targetUser, null);
+            Double sourceOldBalance = sourceAccount.getBalance();
+            Double amountToTransfer;
+            do {
+                amountToTransfer = Console.getDoubleInput("Enter amount to transfer: $");
+            } while (!verifyValidAmount(sourceOldBalance, amountToTransfer));
 
-        // withdraw from sourceAccount
-        // deposit to targetAccount
-        // update accounts
-        int targetAccountId = targetAccount.getAccountId();
-        targetUser.getAccountById(targetAccountId).setBalance(targetNewBalance);
+            Double sourceNewBalance = sourceOldBalance - amountToTransfer;
 
-        int sourceAccountId = sourceAccount.getAccountId();
-        sourceUser.getAccountById(sourceAccountId).setBalance(sourceNewBalance);
+            Double targetOldBalance = targetAccount.getBalance();
+            Double targetNewBalance = targetOldBalance + amountToTransfer;
 
-        // create transaction report for sourceAccount
-        String sourceTransactionReport = sourceUser.getAccountById(sourceAccountId).buildTransactionReport(sourceOldBalance, sourceNewBalance, amountToTransfer, "transfer to "+targetUsername);
-        sourceUser.getAccountById(sourceAccountId).addTransactionReportToTransactionHistory(sourceTransactionReport);
+            // withdraw from sourceAccount
+            // deposit to targetAccount
+            // update accounts
+            int targetAccountId = targetAccount.getAccountId();
+            targetUser.getAccountById(targetAccountId).setBalance(targetNewBalance);
 
-        // create transaction report for targetAccount
-        String targetTransactionReport = targetUser.getAccountById(targetAccountId).buildTransactionReport(targetOldBalance,targetNewBalance,amountToTransfer, "transfer from "+sourceUser.getUsername());
-        targetUser.getAccountById(targetAccountId).addTransactionReportToTransactionHistory(targetTransactionReport);
+            int sourceAccountId = sourceAccount.getAccountId();
+            sourceUser.getAccountById(sourceAccountId).setBalance(sourceNewBalance);
 
-        // update users
-        userVillage.updateUser(sourceUser, sourceUser.getUserId());
-        userVillage.updateUser(targetUser, targetUser.getUserId());
+            // create transaction report for sourceAccount
+            String sourceTransactionReport = sourceUser.getAccountById(sourceAccountId).buildTransactionReport(sourceOldBalance, sourceNewBalance, amountToTransfer, "transfer to " + targetUsername);
+            sourceUser.getAccountById(sourceAccountId).addTransactionReportToTransactionHistory(sourceTransactionReport);
+
+            // create transaction report for targetAccount
+            String targetTransactionReport = targetUser.getAccountById(targetAccountId).buildTransactionReport(targetOldBalance, targetNewBalance, amountToTransfer, "transfer from " + sourceUser.getUsername());
+            targetUser.getAccountById(targetAccountId).addTransactionReportToTransactionHistory(targetTransactionReport);
+
+            // update users
+            userVillage.updateUser(sourceUser, sourceUser.getUserId());
+            userVillage.updateUser(targetUser, targetUser.getUserId());
+        }
         return userVillage;
     }
 
