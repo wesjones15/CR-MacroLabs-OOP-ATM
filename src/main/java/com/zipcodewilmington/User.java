@@ -82,4 +82,14 @@ public class User {
     public Account getInvestmentsAccount() {
         return this.accounts[2];
     }
+
+    public Integer getNumberOfOpenAccounts() {
+        int count = 0;
+        for (Account account: accounts) {
+            if(account.checkIfAccountIsOpen()) {
+                count += 1;
+            }
+        }
+        return count;
+    }
 }
