@@ -63,7 +63,10 @@ public class Transactions {
     //TODO make withdraw return updated account or updatedUser
     public static Account withDrawFromAccount(Account activeAccount) {
         Double oldBalance = activeAccount.getBalance();
-        Double amountToWithdraw = Console.getDoubleInput("Enter amount to withdraw: $");
+        Double amountToWithdraw;
+        do {
+            amountToWithdraw = Console.getDoubleInput("Enter amount to withdraw: $");
+        } while(!verifyValidAmount(oldBalance, amountToWithdraw));
         Double newBalance = oldBalance - amountToWithdraw;
         activeAccount.setBalance(newBalance);
         String transactionReport = activeAccount.buildTransactionReport(oldBalance, newBalance, amountToWithdraw, "withdraw");
@@ -87,12 +90,15 @@ public class Transactions {
         }
         return userVillage;
     }
-
+    //TODO rewrite transfer methods
     public static User transferToOwnAccount(User sourceUser, Account sourceAccount) {
         Account targetAccount = selectCurrentAccount(sourceUser, sourceAccount.getAccountId());
-        Double amountToTransfer = Console.getDoubleInput("Enter amount to transfer: $");
-
         Double sourceOldBalance = sourceAccount.getBalance();
+        Double amountToTransfer;
+        do {
+            amountToTransfer = Console.getDoubleInput("Enter amount to transfer: $");
+        } while (!verifyValidAmount(sourceOldBalance, amountToTransfer));
+
         Double sourceNewBalance = sourceOldBalance - amountToTransfer;
 
         Double targetOldBalance = targetAccount.getBalance();
@@ -119,10 +125,12 @@ public class Transactions {
         String targetUsername = Console.getStringInput("Enter username you wish to transfer to: ");
         User targetUser = userVillage.getUserByUsername(targetUsername);
         Account targetAccount = selectCurrentAccount(targetUser, null);
-
-        Double amountToTransfer = Console.getDoubleInput("Enter amount to transfer: $");
-
         Double sourceOldBalance = sourceAccount.getBalance();
+        Double amountToTransfer;
+        do {
+            amountToTransfer = Console.getDoubleInput("Enter amount to transfer: $");
+        } while (!verifyValidAmount(sourceOldBalance, amountToTransfer));
+
         Double sourceNewBalance = sourceOldBalance - amountToTransfer;
 
         Double targetOldBalance = targetAccount.getBalance();
@@ -163,6 +171,10 @@ public class Transactions {
         Console.println(message.toString());
         int accountIndex = Console.getIntegerInput("select account: ");
         return activeUser.getAccounts()[accountIndex];
+    }
+
+    public static Boolean verifyValidAmount(Double balance, Double amount) {
+        return (balance > amount);
     }
 
 }
