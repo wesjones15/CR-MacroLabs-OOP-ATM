@@ -17,9 +17,9 @@ public class UserVillage /*implements Serializable */{
         if (verifyUsernameNotTaken(username)) {
             users.add(new User(username, password, users.size()));
         }
+
     }
 
-    // removeUser should call updateUser and update with new empty user object
     public void updateUser(User updatedUser, Integer userId) {
         String currentUserUsername = getUserById(userId).getUsername();
         String updatedUserUsername = updatedUser.getUsername();
@@ -30,6 +30,16 @@ public class UserVillage /*implements Serializable */{
         else {
             Console.println("updateUser failed. usernames do not match");
         }
+    }
+
+    public void removeUser(Integer userId) {
+        users.set(userId, new User());
+    }
+
+    public void updateUserByAccount(Account account) {
+        Integer userId = account.getUserId();
+        User user = getUserById(userId);
+        updateUser(user, userId);
     }
 
     public User getUserById(Integer userId) {
@@ -46,8 +56,8 @@ public class UserVillage /*implements Serializable */{
         }
         if (userId+1 > users.size()) {
             userId = 0;
-            Console.println("user not found, returning default user instead of breaking");
-            // should raise user not found exception
+            Console.println("User not found, returning default user instead of breaking");
+            //TODO replace with try catch
         }
         return users.get(userId);
     }
@@ -64,6 +74,7 @@ public class UserVillage /*implements Serializable */{
     public ArrayList<User> getUsersList() {
         return users;
     }
+
     public Boolean verifyUsernameNotTaken(String username) {
         boolean uniqueUsername = true;
         for (User user : users) {
@@ -79,7 +90,7 @@ public class UserVillage /*implements Serializable */{
 //
 //        try {
 //
-//            FileOutputStream fileOut = new FileOutputStream(filepath);
+//            FileOutputStream fileOut = new FileOutputStream("");
 //            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
 //            objectOut.writeObject(serObj);
 //            objectOut.close();
