@@ -11,6 +11,9 @@ public class Account {
     private static final String[] accountNames = {"Checking", "Savings", "Investments"};
 
     // constructor
+    public Account() {
+        this.accountIsOpen = false;
+    }
     public Account(Double balance, Integer userId, Integer accountId) {
         this.balance = balance;
         this.userId = userId;
@@ -40,6 +43,7 @@ public class Account {
         return this.accountIsOpen;
     }
 
+
     public String buildTransactionReport(Double oldBalance, Double newBalance, Double amountTransferred, String transactionType) {
         StringBuilder transactionReport = new StringBuilder();
 
@@ -64,6 +68,7 @@ public class Account {
         return this.transactionHistory;
     }
 
+
     public String getLastTransaction() {
         return this.transactionHistory.get(transactionHistory.size()-1);
     }
@@ -83,5 +88,6 @@ public class Account {
     public Integer getAccountId() { return this.accountId; }
 
     public String getName() { return accountNames[this.accountId];}
+
 
 }

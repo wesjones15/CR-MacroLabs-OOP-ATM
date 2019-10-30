@@ -85,9 +85,9 @@ public class Main {
                 break;
             case 1:
                 // access account
-                if(currentUser.getCheckingAccount() == null&& currentUser.getSavingsAccount() == null && currentUser.getInvestmentsAccount() == null){
-                    Console.println("No current accounts, Select account to open : ");
-                    selectAccountToOpen();
+                if(!currentUser.hasOpenAccount()){
+                    Console.println("No current accounts, Please open an account");
+                    break;
                 }
                 currentAccount = selectCurrentAccount(currentUser);
                 selectTransaction();
@@ -188,6 +188,7 @@ public class Main {
     public static void transferToOwnAccount() {
         User sourceUser = currentUser;
         Account sourceAccount = currentAccount;
+
         Account targetAccount = selectCurrentAccount(sourceUser);
         Double amountToTransfer = Console.getDoubleInput("Enter amount to transfer: $");
 
@@ -301,5 +302,6 @@ public class Main {
         userVillage.createNewUser(currentUserUsername, password);
         return userVillage.getUserByUsername(currentUserUsername);
     }
+
 
 }

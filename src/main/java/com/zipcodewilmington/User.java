@@ -1,5 +1,7 @@
 package com.zipcodewilmington;
 
+import java.util.Arrays;
+
 public class User {
     private Integer userId;
     private String username;
@@ -13,6 +15,9 @@ public class User {
         this.password = password;
         this.userId = userId;
         this.accounts = new Account[3];//checking, savings, investment
+        for (int i = 0; i < 3; i++) {
+            accounts[i] = new Account();
+        }
     }
     //ID
     public Integer getUserId(){ return userId;}
@@ -63,6 +68,10 @@ public class User {
 
     public Account[] getAccounts() {return accounts;}
 
+
+    //Method for Testing ****
+    public void getAccountsToString(){Console.println(Arrays.toString(accounts));}
+
     public Account getAccountById(Integer accountId) {
         return accounts[accountId];
     }
@@ -79,4 +88,16 @@ public class User {
     public Account getInvestmentsAccount() {
         return this.accounts[2];
     }
+
+    //Check for open account
+    public boolean hasOpenAccount(){
+        for(int i =0; i < accounts.length; i++){
+           if(getAccountById(i).checkIfAccountIsOpen()){
+               return true;
+           }
+        }
+        return false;
+    }
+
+
 }
