@@ -17,6 +17,7 @@ public class UserVillage /*implements Serializable */{
         if (verifyUsernameNotTaken(username)) {
             users.add(new User(username, password, users.size()));
         }
+
     }
 
     // removeUser should call updateUser and update with new empty user object
@@ -30,6 +31,12 @@ public class UserVillage /*implements Serializable */{
         else {
             Console.println("updateUser failed. usernames do not match");
         }
+    }
+
+    public void updateUserByAccount(Account account) {
+        Integer userId = account.getUserId();
+        User user = getUserById(userId);
+        updateUser(user, userId);
     }
 
     public User getUserById(Integer userId) {
@@ -64,6 +71,7 @@ public class UserVillage /*implements Serializable */{
     public ArrayList<User> getUsersList() {
         return users;
     }
+
     public Boolean verifyUsernameNotTaken(String username) {
         boolean uniqueUsername = true;
         for (User user : users) {

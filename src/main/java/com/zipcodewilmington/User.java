@@ -29,7 +29,7 @@ public class User {
 
     //TODO write method for openAccountById
 //    public void openAccountById(Integer accountId) {
-//        accounts[accountId] = new
+//        accounts[accountId] = new Account(00.00, this.getUserId(), accountId);
 //    }
 
     public void openCheckingAccount() {
@@ -57,9 +57,17 @@ public class User {
     // replace accounts[0] with empty checking account object
     // set boolean accountIsOpen to false
 
-    //TODO write method for close savings account
-
-    //TODO write method for close investments account
+    public void closeAccountById(Integer accountId) {
+        Account account = this.getAccountById(accountId);
+        if (account.getBalance() == 0.00 && account.getUserId() == userId) {
+            this.getAccountById(accountId).toggleOpenAccount();
+            String transactionReport = account.buildTransactionReport(0.00,0.00,0.00,"close account");
+            this.getAccountById(accountId).addTransactionReportToTransactionHistory(transactionReport);
+            Console.println("Successfully closed account "+account.getName());
+        } else {
+            Console.println("your balance must be $0.00 to close your account");
+        }
+    }
 
     public Account[] getAccounts() {return accounts;}
 
@@ -67,15 +75,14 @@ public class User {
         return accounts[accountId];
     }
 
-    //TODO write method for get checking account : return accounts[0]
     public Account getCheckingAccount() {
         return this.accounts[0];
     }
-    //TODO write method for get savings account : return accounts[1]
+
     public Account getSavingsAccount() {
         return this.accounts[1];
     }
-    //TODO write method for get investments account : return accounts[2]
+
     public Account getInvestmentsAccount() {
         return this.accounts[2];
     }
