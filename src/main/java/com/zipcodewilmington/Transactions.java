@@ -43,15 +43,12 @@ public class Transactions {
             case 7:
                 // close account
                 Console.println("Close Account "+activeAccount.getName());
-//                closeAccount(activeAccount);
                 userVillage.getUserById(activeAccount.getUserId()).closeAccountById(activeAccount.getAccountId());
                 break;
         }
-//        currentAccount = null;
         return userVillage;
     }
 
-    // params maybe uservillage, accID, userID
     public static Account depositToAccount(Account activeAccount) {
         Double oldBalance = activeAccount.getBalance();
         Double amountToDeposit = Console.getDoubleInput("Enter deposit amount: $");
@@ -60,9 +57,7 @@ public class Transactions {
         // transaction report
         String transactionReport = activeAccount.buildTransactionReport(oldBalance, newBalance, amountToDeposit, "deposit");
         activeAccount.addTransactionReportToTransactionHistory(transactionReport);
-        //return acc
         return activeAccount;
-//        userVillage.updateUser(currentUser, currentUser.getUserId());
     }
 
     //TODO make withdraw return updated account or updatedUser
@@ -73,14 +68,10 @@ public class Transactions {
         activeAccount.setBalance(newBalance);
         String transactionReport = activeAccount.buildTransactionReport(oldBalance, newBalance, amountToWithdraw, "withdraw");
         activeAccount.addTransactionReportToTransactionHistory(transactionReport);
-        //return activeUser or activeAccount
         return activeAccount;
-//        userVillage.updateUser(currentUser, currentUser.getUserId());
     }
 
     public static UserVillage selectTransferTarget(UserVillage userVillage, User sourceUser, Account sourceAccount) {
-//        Account sourceAccount = currentAccount;
-//        User sourceUser = currentUser;
         Console.println("Options\n\t0 : transfer to your other open accounts\n\t1 : transfer to another user");
         int choice = Console.getIntegerInput("Select option: ");
         switch (choice) {
@@ -98,8 +89,6 @@ public class Transactions {
     }
 
     public static User transferToOwnAccount(User sourceUser, Account sourceAccount) {
-//        User sourceUser = currentUser;
-//        Account sourceAccount = currentAccount;
         Account targetAccount = selectCurrentAccount(sourceUser, sourceAccount.getAccountId());
         Double amountToTransfer = Console.getDoubleInput("Enter amount to transfer: $");
 
@@ -114,21 +103,19 @@ public class Transactions {
 
         int sourceAccountId = sourceAccount.getAccountId();
         sourceUser.getAccountById(sourceAccountId).setBalance(sourceNewBalance);
+
         // create transaction report for sourceAccount
         String sourceTransactionReport = sourceUser.getAccountById(sourceAccountId).buildTransactionReport(sourceOldBalance, sourceNewBalance, amountToTransfer, "transfer to "+targetAccount.getName());
         sourceUser.getAccountById(sourceAccountId).addTransactionReportToTransactionHistory(sourceTransactionReport);
+
         // create transaction report for targetAccount
         String targetTransactionReport = sourceUser.getAccountById(targetAccountId).buildTransactionReport(targetOldBalance,targetNewBalance,amountToTransfer, "transfer from "+sourceAccount.getName());
         sourceUser.getAccountById(targetAccountId).addTransactionReportToTransactionHistory(targetTransactionReport);
-        // update user
-//        userVillage.updateUser(sourceUser, sourceUser.getUserId());
+
         return sourceUser;
     }
 
     public static UserVillage transferToAnotherUsersAccount(UserVillage userVillage, User sourceUser, Account sourceAccount) {
-//        User sourceUser = currentUser;
-//        Account sourceAccount = currentAccount;
-
         String targetUsername = Console.getStringInput("Enter username you wish to transfer to: ");
         User targetUser = userVillage.getUserByUsername(targetUsername);
         Account targetAccount = selectCurrentAccount(targetUser, null);
@@ -165,12 +152,11 @@ public class Transactions {
     }
 
     public static Account selectCurrentAccount(User activeUser, Integer activeAccountId) {
-        // might not need activeAccountId
-
         StringBuilder message = new StringBuilder();
         message.append("Options\n");
         for (Account account : activeUser.getAccounts()) {
-            if (account != null && (account.getAccountId() != activeAccountId && account.getUserId() == activeUser.getUserId())) {
+            if (account != null && account.checkIfAccountIsOpen() &&
+                    (account.getAccountId() != activeAccountId && account.getUserId() == activeUser.getUserId())) {
                 message.append(String.format("\t%s : %s\n", account.getAccountId(), account.getName()));
             }
         }

@@ -13,6 +13,7 @@ public class User {
         this.password = password;
         this.userId = userId;
         this.accounts = new Account[3];//checking, savings, investment
+
     }
     //ID
     public Integer getUserId(){ return userId;}
