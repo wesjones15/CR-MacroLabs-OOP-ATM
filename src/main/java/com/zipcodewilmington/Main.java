@@ -89,11 +89,12 @@ public class Main {
         StringBuilder message = new StringBuilder();
         message.append("Options\n");
         for (int i = 0; i < activeUser.getAccounts().length; i++) {
-            if (activeUser.getAccounts()[i] == null) {
+            if (!activeUser.getAccountById(i).checkIfAccountIsOpen()) {
                 message.append(String.format("\t%s : %s\n", i, accountNames[i]));
             }
         }
         Console.println(message.toString());
+        //TODO add check for if acc already open
         int accountIndex = Console.getIntegerInput("Select account: ");
         return accountIndex;
     }
