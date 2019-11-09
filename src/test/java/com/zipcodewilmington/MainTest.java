@@ -5,7 +5,7 @@ import org.junit.Assert;
 
 import java.util.Arrays;
 
-public class TestMain {
+public class MainTest {
     //TODO write test for logUserIn method
     //TODO write test for createUser
     //TODO write tests for main flow

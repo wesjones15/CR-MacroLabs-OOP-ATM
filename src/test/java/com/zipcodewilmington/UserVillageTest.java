@@ -3,7 +3,7 @@ package com.zipcodewilmington;
 import org.junit.Test;
 import org.junit.Assert;
 
-public class TestUserVillage {
+public class UserVillageTest {
     //TODO create test for constructor
     @Test
     public void constructorTest() {
